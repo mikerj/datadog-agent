@@ -71,9 +71,6 @@ type syscallsEventTest struct {
 }
 
 func TestSyscallsEvent_UnmarshalBinary(t *testing.T) {
-	type args struct {
-		data []byte
-	}
 	tests := []syscallsEventTest{
 		{
 			name:    "nil_array",
