@@ -131,7 +131,7 @@ func (tc *TrafficCaptureWriter) ProcessMessage(msg *CaptureBuffer) error {
 
 // ValidateLocation validates the location passed as an argument is writable.
 // The location and/or and error if any are returned.
-func (tc *TrafficCaptureWriter) ValidateLocation(l string) (string, error) {
+func ValidateLocation(l string) (string, error) {
 	captureFs.RLock()
 	defer captureFs.RUnlock()
 
@@ -192,7 +192,7 @@ func (tc *TrafficCaptureWriter) Capture(l string, d time.Duration, compressed bo
 		return
 	}
 
-	location, err = tc.ValidateLocation(l)
+	location, err = ValidateLocation(l)
 	if err != nil {
 		return
 	}
@@ -261,6 +261,9 @@ process:
 			}
 		case <-shutdown:
 			log.Debug("Capture shutting down")
+			tc.Lock()
+			tc.ongoing = false
+			tc.Unlock()
 			break process
 		}
 	}
@@ -302,8 +305,6 @@ cleanup:
 	}
 
 	tc.File.Close()
-	tc.ongoing = false
-
 }
 
 // StopCapture stops the ongoing capture if in process.
