@@ -87,6 +87,7 @@ type Processor struct {
 	h Handlers
 }
 
+// ProcessResult contains the result of metadata and manifest
 type ProcessResult struct {
 	MetadataMessages []model.MessageBody
 	ManifestMessages []model.MessageBody
