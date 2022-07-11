@@ -148,7 +148,7 @@ func (cb *CollectorBundle) Run(sender aggregator.Sender) {
 		}
 
 		runDuration := time.Since(runStartTime)
-
+		log.Error("Orch RUNNNNNNNNNNNNN")
 		log.Debugf("Collector %s run stats: listed=%d processed=%d messages=%d duration=%s", collector.Metadata().Name, result.ResourcesListed, result.ResourcesProcessed, len(result.Metadata), runDuration)
 
 		orchestrator.SetCacheStats(result.ResourcesListed, len(result.Metadata), collector.Metadata().NodeType)
