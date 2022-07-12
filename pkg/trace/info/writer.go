@@ -7,16 +7,27 @@ package info
 
 // TraceWriterInfo represents statistics from the trace writer.
 type TraceWriterInfo struct {
-	Payloads          int64
-	Traces            int64
-	Events            int64
-	Spans             int64
-	Errors            int64
-	Retries           int64
-	Bytes             int64
+	Payloads int64
+	Traces   int64
+	Events   int64
+	Spans    int64
+	Errors   int64
+	Retries  int64
+
+	// Bytes specifies the actual number of bytes successfully written to the intake.
+	Bytes int64
+
+	// BytesUncompressed specifies the number of bytes that were written to
+	// the intake before compression. This metric is used solely to verify the
+	// accuracy of BytesEstimated (see below).
 	BytesUncompressed int64
-	BytesEstimated    int64
-	SingleMaxSize     int64
+
+	// BytesEstimated specifies the estimated size of payloads before they were
+	// marshalled and compressed. It is purely a heuristic used to estimate the
+	// size of traces stored in memory in order to know when they have reached a
+	// size big enough to be marshalled, compressed and flushed, in order to avoid
+	// reaching the intakes' maximum payload size.
+	BytesEstimated int64
 }
 
 // StatsWriterInfo represents statistics from the stats writer.
